@@ -1,73 +1,31 @@
-const todoControl = document.querySelector('.todo-control')
-const headerInput = document.querySelector('.header-input')
-const todoList = document.querySelector('.todo-list')
-const todoCompleted = document.querySelector('.todo-completed')
-
-let todoData = []
-
-const todoLoad = function () {
-    let result = JSON.parse(localStorage.getItem('db'))
-
-    if (!result) {
-        result = []
-    }
-
-    return result
+const DomElement = function (selector, height, width, bg, fontSize) {
+    this.selector = selector
+    this.height = height
+    this.width = width
+    this.bg = bg
+    this.fontSize = fontSize
 }
 
-todoData = todoLoad()
+DomElement.prototype.createElement = function () {
+    let dot = this.selector.slice(1)
+    let div
+    div = document.createElement('div')
 
-const render = function () {
-    todoList.innerHTML = ''
-    todoCompleted.innerHTML = ''
-
-    todoData.forEach(function (item, index) {
-        const li = document.createElement('li')
-
-        li.classList.add('todo-item')
-
-        li.innerHTML = '<span class="text-todo">' + item.text + '</span>' +
-            '<div class="todo-buttons">' +
-            '<button class="todo-remove"></button>' +
-            '<button class="todo-complete"></button>' +
-            '</div>'
-
-        if (item.completed) {
-            todoCompleted.append(li)
-        } else {
-            todoList.append(li)
-        }
-
-        li.querySelector('.todo-remove').addEventListener('click', function () {
-            todoData.splice(index, 1)
-            render()
-        })
-
-        li.querySelector('.todo-complete').addEventListener('click', function () {
-            item.completed = !item.completed
-            render()
-        })
-    })
-
-    localStorage.db = JSON.stringify(todoData)
-}
-
-todoControl.addEventListener('submit', function (event) {
-    event.preventDefault()
-
-    const newTodo = {
-        text: headerInput.value,
-        completed: false
+    if (this.selector[0] === '.') {
+        div.classList.add(dot)
     }
 
-    todoData.push(newTodo)
-    headerInput.value = ''
+    else if (this.selector[0] === '#') {
+        div.id = dot
+    }
 
-    render()
-})
+    div.style.cssText = `height:${this.height}px;width:${this.width}px;background:${this.bg};fontSize:${this.fontSize}px;`
+    document.querySelector('body').append(div)
+
+}
 
 
-render();
+const one = new DomElement('.selector', 200, 200, 'blue', 12)
+const two = new DomElement('#selector', 300, 400, 'yellow', 55)
 
-
-
+two.createElement()
