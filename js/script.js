@@ -29,3 +29,4 @@ const one = new DomElement('.selector', 200, 200, 'blue', 12)
 const two = new DomElement('#selector', 300, 400, 'yellow', 55)
 
 two.createElement()
+
