@@ -20,6 +20,7 @@ DomElement.prototype.createElement = function () {
     }
 
     div.style.cssText = `height:${this.height}px;width:${this.width}px;background:${this.bg};fontSize:${this.fontSize}px;`
+    
     document.querySelector('body').append(div)
 
 }
